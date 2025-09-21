@@ -4,12 +4,42 @@ using BenchmarkDotNet.Environments;
 using BenchmarkDotNet.Jobs;
 using BenchmarkDotNet.Running;
 using CardinalityEstimation;
+using System.Text;
 
 var config = DefaultConfig.Instance
                 .AddJob(Job.Default.WithId("Core80").WithRuntime(CoreRuntime.Core80))
                 .AddJob(Job.Default.WithId("Core90").WithRuntime(CoreRuntime.Core90));
 
+BenchmarkRunner.Run<AddHash>(config);
 BenchmarkRunner.Run<DifferentHashes>(config);
+
+[MemoryDiagnoser]
+public class AddHash
+{
+    public static readonly Random Rand = new Random();
+
+    private const int N = 10000000;
+
+    private ulong[] dataHashes = Enumerable.Range(0, N)
+        .Select(_ => Rand.Next().ToString() + Guid.NewGuid().ToString() + Rand.Next().ToString())
+        .Select(x => BitConverter.ToUInt64(System.IO.Hashing.XxHash128.Hash(Encoding.UTF8.GetBytes(x))))
+        .ToArray();
+
+    [Params(4, 16)]
+    public int Bits { get; set; }
+
+    [Benchmark]
+    public void Run() => Run(Bits, (x) => throw new InvalidProgramException());
+
+    private void Run(int bits, GetHashCodeDelegate hashFunction)
+    {
+        var hll = new CardinalityEstimator(hashFunction, bits);
+        for (var i = 0; i < N; i++)
+        {
+            hll.AddHash(dataHashes[i]);
+        }
+    }
+}
 
 [MemoryDiagnoser]
 public class DifferentHashes

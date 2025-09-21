@@ -470,6 +470,18 @@ namespace CardinalityEstimation
         }
 
         /// <summary>
+        /// Adds an element's hash code to the counted set
+        /// </summary>
+        /// <param name="hashCode">Hash code of the element to add</param>
+        /// <returns>True if the estimator's state was modified, false otherwise</returns>
+        public bool AddHash(ulong hashCode)
+        {
+            bool changed = AddElementHash(hashCode);
+            CountAdditions++;
+            return changed;
+        }
+
+        /// <summary>
         /// Returns the estimated number of items in the estimator
         /// </summary>
         /// <returns>
