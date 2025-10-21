@@ -1,7 +1,7 @@
 ﻿#if !NETCOREAPP3_0_OR_GREATER
 namespace System.Numerics;
 
-public static class BitOperations
+internal static class BitOperations
 {
     public static uint LeadingZeroCount(ulong x)
     {

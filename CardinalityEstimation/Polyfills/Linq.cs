@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace System.Linq;
 
-public static class LinqExtensions
+internal static class LinqExtensions
 {
     public static HashSet<T> ToHashSet<T>(this IEnumerable<T> source)
     {
