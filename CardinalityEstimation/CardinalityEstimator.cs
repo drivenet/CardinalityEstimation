@@ -207,7 +207,7 @@ namespace CardinalityEstimation
         /// <param name="hashFunction">Hash function to use for element hashing</param>
         /// <param name="state">The state to initialize the estimator with</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="state"/> is null</exception>
-        internal CardinalityEstimator(GetHashCodeDelegate hashFunction, CardinalityEstimatorState state)
+        public CardinalityEstimator(GetHashCodeDelegate hashFunction, CardinalityEstimatorState state)
             : this(state)
         {
             // Init the hash function
@@ -230,7 +230,7 @@ namespace CardinalityEstimation
         /// <param name="hashFunctionSpan">Span hash function to use for element hashing</param>
         /// <param name="state">The state to initialize the estimator with</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="state"/> is null</exception>
-        internal CardinalityEstimator(GetHashCodeSpanDelegate hashFunctionSpan, CardinalityEstimatorState state)
+        public CardinalityEstimator(GetHashCodeSpanDelegate hashFunctionSpan, CardinalityEstimatorState state)
             : this(state)
         {
             // Init the hash function
@@ -668,12 +668,11 @@ namespace CardinalityEstimation
             return result;
         }
 
-        #region Private/Internal methods
         /// <summary>
         /// Gets the current state of this estimator for serialization purposes
         /// </summary>
         /// <returns>A <see cref="CardinalityEstimatorState"/> representing the current state</returns>
-        internal CardinalityEstimatorState GetState()
+        public CardinalityEstimatorState GetState()
         {
             return new CardinalityEstimatorState
             {
@@ -686,6 +685,7 @@ namespace CardinalityEstimation
             };
         }
 
+        #region Private/Internal methods
         /// <summary>
         /// Creates state for an empty CardinalityEstimator with DirectCount and LookupSparse empty, LookupDense null.
         /// </summary>
