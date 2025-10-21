@@ -41,7 +41,7 @@ namespace CardinalityEstimation
     /// </remarks>
     /// <seealso cref="CardinalityEstimator"/>
     /// <seealso cref="CardinalityEstimatorSerializer"/>
-    internal class CardinalityEstimatorState
+    public class CardinalityEstimatorState
     {
         /// <summary>
         /// Gets or sets the number of bits for indexing HLL sub-streams.
